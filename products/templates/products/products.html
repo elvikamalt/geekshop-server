@@ -13,8 +13,8 @@
         <div class="col-lg-3">
             <h1 class="my-4">{{ header|capfirst }}</h1>
             <div class="list-group">
-                {% for category in product_categories %}
-                    <a href="#" class="list-group-item">{{ category|capfirst }}</a>
+                {% for category in categories %}
+                    <a href="#" class="list-group-item">{{ category.name|capfirst }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -54,14 +54,14 @@
                         <div class="card h-100">
                             <a href="#">
                                 <img class="card-img-top"
-                                     src="{% static product.image %}"
+                                     src="{{ product.image.url }}"
                                      alt="">
                             </a>
                             <div class="card-body">
                                 <h4 class="card-title">
                                     <a href="#">{{ product.name|capfirst }}</a>
                                 </h4>
-                                <h5>{{ product.price }},00 руб.</h5>
+                                <h5>{{ product.price }} руб.</h5>
                                 <p class="card-text">{{ product.description|capfirst }}</p>
                             </div>
                             <div class="card-footer text-center">
