@@ -34,6 +34,7 @@ def basket_remove(request, id):
     return JsonResponse({'result': create_baskets_string_render(request)})
 
 
+@login_required
 def basket_edit(request, id, quantity):
     if request.is_ajax():
         basket = Basket.objects.get(id=id)
