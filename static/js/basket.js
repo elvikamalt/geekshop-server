@@ -20,4 +20,17 @@ window.onload = function () {
             url: '/baskets/add/' + product_id + '/',
         })
     })
+
+    $(document.body).on('click', '.remove_basket_button', function () {
+        var id = $(this).attr('id');
+        console.log(id);
+
+        $.ajax({
+            url: '/baskets/remove/' + id + '/',
+            success: function (data) {
+                $('.basket_list').html(data.result)
+            }
+        })
+        return false;
+    })
 }
