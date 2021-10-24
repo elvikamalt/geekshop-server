@@ -11,4 +11,13 @@ window.onload = function () {
             }
         })
     })
+
+    $('.add_product_button').on('click', function () {
+        var product_id = $(this).attr('id');
+        console.log(product_id);
+
+        $.ajax({
+            url: '/baskets/add/' + product_id + '/',
+        })
+    })
 }

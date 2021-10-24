@@ -65,7 +65,7 @@
                                 <p class="card-text">{{ product.description|capfirst }}</p>
                             </div>
                             <div class="card-footer text-center">
-                                <a class="btn btn-outline-success" href="{% url 'baskets:basket_add' product.id %}">
+                                <a id="{{ product.id }}" class="btn btn-outline-success add_product_button">
                                     Отправить в корзину
                                 </a>
                             </div>
