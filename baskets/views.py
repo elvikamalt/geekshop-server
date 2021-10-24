@@ -31,10 +31,7 @@ def basket_remove(request, id):
     if request.is_ajax():
         basket = Basket.objects.get(id=id)
         basket.delete()
-    baskets = Basket.objects.filter(user=request.user)
-    context = {'baskets': baskets}
-    result = render_to_string('baskets/baskets.html', context)
-    return JsonResponse({'result': result})
+    return JsonResponse({'result': create_baskets_string_render(request)})
 
 
 def basket_edit(request, id, quantity):
@@ -45,7 +42,10 @@ def basket_edit(request, id, quantity):
             basket.save()
         else:
             basket.delete()
+    return JsonResponse({'result': create_baskets_string_render(request)})
+
+
+def create_baskets_string_render(request):
     baskets = Basket.objects.filter(user=request.user)
     context = {'baskets': baskets}
-    result = render_to_string('baskets/baskets.html', context)
-    return JsonResponse({'result': result})
+    return render_to_string('baskets/baskets.html', context)
