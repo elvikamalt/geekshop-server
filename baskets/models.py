@@ -25,3 +25,9 @@ class Basket(models.Model):
 
     def total_sum(self):
         return sum(basket.sum() for basket in self.baskets)
+
+    def set_basket_quantity(self, quantity):
+        if quantity <= self.product.quantity:
+            self.quantity = quantity
+            return True
+        return False
