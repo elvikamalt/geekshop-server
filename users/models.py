@@ -9,3 +9,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return f'Пользователь {self.username}: {self.first_name} {self.last_name}'
+
+    def safe_delete(self):
+        self.is_active = False
+        self.save()
