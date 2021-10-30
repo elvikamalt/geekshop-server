@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from users.models import User
+
 
 def index(request):
     context = {'title': 'GeekShop - Админ Панель'}
@@ -14,7 +16,10 @@ def admin_users_create(request):
 
 # Read
 def admin_users(request):
-    context = {'title': 'GeekShop - Пользователи'}
+    context = {
+        'title': 'GeekShop - Пользователи',
+        'users': User.objects.all(),
+    }
     return render(request, 'admins/admin-users-read.html', context)
 
 
