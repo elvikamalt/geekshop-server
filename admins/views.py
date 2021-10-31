@@ -1,8 +1,9 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 
 from users.models import User
 from products.models import Product, ProductCategory
@@ -21,19 +22,26 @@ class UserListView(ListView):
     template_name = 'admins/admin-users-read.html'
 
 
+class UserCreateView(CreateView):
+    model = User
+    form_class = UserAdminRegistrationForm
+    success_url = reverse_lazy('admins:admin_users')
+    template_name = 'admins/admin-users-create.html'
+
+
 # Create
-@user_passes_test(lambda u: u.is_staff)
-def admin_users_create(request):
-    if request.method == 'POST':
-        form = UserAdminRegistrationForm(data=request.POST, files=request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, f'Пользователь успешно создан')
-            return HttpResponseRedirect(reverse('admins:admin_users'))
-    else:
-        form = UserAdminRegistrationForm()
-    context = {'title': 'GeekShop - Создание пользователя', 'form': form}
-    return render(request, 'admins/admin-users-create.html', context)
+# @user_passes_test(lambda u: u.is_staff)
+# def admin_users_create(request):
+#     if request.method == 'POST':
+#         form = UserAdminRegistrationForm(data=request.POST, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f'Пользователь успешно создан')
+#             return HttpResponseRedirect(reverse('admins:admin_users'))
+#     else:
+#         form = UserAdminRegistrationForm()
+#     context = {'title': 'GeekShop - Создание пользователя', 'form': form}
+#     return render(request, 'admins/admin-users-create.html', context)
 
 
 # Read
