@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib import messages
 
 from users.models import User
 from products.models import Product, ProductCategory
@@ -21,6 +22,7 @@ def admin_users_create(request):
         form = UserAdminRegistrationForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Пользователь успешно создан')
             return HttpResponseRedirect(reverse('admins:admin_users'))
     else:
         form = UserAdminRegistrationForm()
@@ -46,6 +48,7 @@ def admin_users_update(request, id):
         form = UserAdminProfileForm(instance=selected_user, files=request.FILES, data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Данные пользователя {selected_user.username} успешно обновлены')
             return HttpResponseRedirect(reverse('admins:admin_users'))
     else:
         form = UserAdminProfileForm(instance=selected_user)
@@ -73,6 +76,7 @@ def admin_products_create(request):
         form = ProductAdminCreateForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Продукт успешно добавлен')
             return HttpResponseRedirect(reverse('admins:admin_products'))
     else:
         form = ProductAdminCreateForm()
@@ -98,6 +102,7 @@ def admin_products_update(request, id):
         form = ProductAdminCreateForm(instance=selected_product, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Данные продукта {selected_product.name} успешно обновлены')
             return HttpResponseRedirect(reverse('admins:admin_products'))
     else:
         form = ProductAdminCreateForm(instance=selected_product)
@@ -125,6 +130,7 @@ def admin_categories_create(request):
         form = ProductCategoryAdminCreateForm(data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Категория успешно добавлена')
             return HttpResponseRedirect(reverse('admins:admin_categories'))
     else:
         form = ProductCategoryAdminCreateForm()
@@ -150,6 +156,7 @@ def admin_categories_update(request, id):
         form = ProductCategoryAdminCreateForm(instance=selected_category, data=request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, f'Данные категории {selected_category.name} успешно обновлены')
             return HttpResponseRedirect(reverse('admins:admin_categories'))
     else:
         form = ProductCategoryAdminCreateForm(instance=selected_category)
