@@ -4,20 +4,15 @@ from products.models import ProductCategory, Product
 
 
 def index(request):
-    context = {
-        'title': 'GeekShop',
-        'header': 'GeekShop Store',
-    }
+    context = {'title': 'GeekShop'}
     return render(request, 'products/index.html', context)
 
 
-def products(request):
-    categories = ProductCategory.objects.all()
-    products = Product.objects.all()
-    context = {
-        'title': 'GeekShop - Каталог',
-        'header': 'GeekShop',
-        'categories': categories,
-        'products': products,
-    }
+def products(request, category_id=None):
+    context = {'title': 'GeekShop - Каталог', 'categories': ProductCategory.objects.all()}
+    if category_id:
+        products = Product.objects.filter(category_id=category_id)
+    else:
+        products = Product.objects.all()
+    context['products'] = products
     return render(request, 'products/products.html', context)
