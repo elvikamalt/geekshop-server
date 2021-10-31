@@ -29,3 +29,12 @@ class ProductAdminCreateForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('name', 'description', 'image', 'price', 'quantity', 'category')
+
+
+class ProductCategoryAdminCreateForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+
+    class Meta:
+        model = ProductCategory
+        fields = ('name', 'description')
