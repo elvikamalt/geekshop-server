@@ -19,11 +19,11 @@ class UserAdminProfileForm(UserProfileForm):
 
 
 class ProductAdminCreateForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
-    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Введите название продукта'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Введите описание продукта'}), required=False)
     image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'custom-file-input'}))
-    price = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control py-4'}), max_digits=8, decimal_places=2, min_value=0)
-    quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control py-4'}), min_value=0)
+    price = forms.DecimalField(widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Введите цену'}), max_digits=8, decimal_places=2, min_value=0)
+    quantity = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control py-4', 'placeholder': 'Введите количество'}), min_value=0)
     category = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control py-2 form-select'}), queryset=ProductCategory.objects.all(), empty_label=None)
 
     class Meta:
@@ -32,8 +32,8 @@ class ProductAdminCreateForm(forms.ModelForm):
 
 
 class ProductCategoryAdminCreateForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4'}))
-    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}), required=False)
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control py-4', 'placeholder': 'Введите название категории'}))
+    description = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Введите описание категории'}), required=False)
 
     class Meta:
         model = ProductCategory
