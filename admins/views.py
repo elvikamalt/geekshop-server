@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 from django.contrib import messages
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.base import TemplateView
 
 from users.models import User
 from products.models import Product, ProductCategory
@@ -12,10 +13,17 @@ from admins.forms import UserAdminRegistrationForm, UserAdminProfileForm, Produc
     ProductCategoryAdminCreateForm
 
 
-@user_passes_test(lambda u: u.is_staff)
-def index(request):
-    context = {'title': 'GeekShop - Админ Панель'}
-    return render(request, 'admins/index.html', context)
+class AdminsIndexView(TemplateView):
+    template_name = 'admins/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(AdminsIndexView, self).get_context_data(**kwargs)
+        context['title'] = 'GeekShop - Админ Панель'
+        return context
+
+    @method_decorator(user_passes_test(lambda u: u.is_staff))
+    def dispatch(self, request, *args, **kwargs):
+        return super(AdminsIndexView, self).dispatch(request, *args, **kwargs)
 
 
 class UserListView(ListView):
@@ -190,6 +198,12 @@ class CategoryDeleteView(DeleteView):
     @method_decorator(user_passes_test(lambda u: u.is_staff))
     def dispatch(self, request, *args, **kwargs):
         return super(CategoryDeleteView, self).dispatch(request, *args, **kwargs)
+
+
+# @user_passes_test(lambda u: u.is_staff)
+# def index(request):
+#     context = {'title': 'GeekShop - Админ Панель'}
+#     return render(request, 'admins/index.html', context)
 
 
 # Create
